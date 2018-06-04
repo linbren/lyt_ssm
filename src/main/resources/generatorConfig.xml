@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<generatorConfiguration>
+	<!-- 配置文件路径 -->
+	<properties resource="generatorConfig.properties" />
+	<!--数据库驱动包路径 改到pom中generator插件的依赖 -->
+	<!-- <classPathEntry location="${drive.class.path}"/> -->
+	<!-- 改为通用mapper中实现的TkMyBatis3Impl，支持通配符 -->
+	<!-- <context id="MySQLTables" targetRuntime="MyBatis3" defaultModelType="flat"> -->
+	<context id="SqlServer" targetRuntime="tk.mybatis.mapper.generator.TkMyBatis3Impl">
+        <property name="javaFileEncoding" value="UTF-8" />
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+		<!-- 见generatorConfig.properties中的配置 用于使用第三方生成插件 -->
+		<plugin type="${mapper.plugin}">
+			<property name="mappers" value="${mapper.Mapper}" />
+			 <!-- 注释生成类，可以导出数据库中的注释到实体类 支持 MySql ， SqlServer暂不支持 -->
+		    <property name="commentGeneratorType" value="tk.mybatis.mapper.generator.MapperCommentGenerator"/> 
+		</plugin>
+		<!--关闭注释 -->
+<!--  		<commentGenerator type="tk.mybatis.mapper.generator.MapperCommentGenerator">
+			<property name="suppressDate" value="true" />
+			关闭自动生成的注释
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator> -->
+
+		<!--数据库连接信息 -->
+		<jdbcConnection driverClass="${jdbc.driverClassName}"
+			connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}">
+		</jdbcConnection>
+
+		<!--生成的model 包路径 -->
+		<javaModelGenerator targetPackage="${model.package}"
+			targetProject="${target.project}">
+			<property name="enableSubPackages" value="ture" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!--生成xml mapper文件 路径 -->
+		<sqlMapGenerator targetPackage="${xml.mapper.package}"
+			targetProject="${xml.target.project}">
+			<property name="enableSubPackages" value="ture" />
+		</sqlMapGenerator>
+
+		<!-- 生成的Dao接口 的包路径 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="${dao.package}" targetProject="${target.project}">
+			<property name="enableSubPackages" value="ture" />
+		</javaClientGenerator>
+
+		<!--对应数据库表名 -->
+		<!-- <table tableName="TS_USER" mapperName="TsUserDao" enableInsert="true" 
+			enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+			<table 
+			tableName="TS_FUNCTION" mapperName="TsFunctionDao" enableInsert="true" enableDeleteByPrimaryKey="true" 
+			enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableCountByExample="false" 
+			enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
+			selectByExampleQueryId="false"></table> -->
+		<!-- 或者通配符情况 -->
+		<table tableName="TS%" mapperName="{0}Dao" enableInsert="true"
+			enableDeleteByPrimaryKey="true" enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="SqlServer" />
+		</table>
+	</context>
+</generatorConfiguration>

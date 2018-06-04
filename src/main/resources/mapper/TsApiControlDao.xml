@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsApiControlDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsApiControl">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="API_NAME" jdbcType="VARCHAR" property="apiName" />
+    <result column="API_DESC" jdbcType="VARCHAR" property="apiDesc" />
+    <result column="API_VERSION" jdbcType="VARCHAR" property="apiVersion" />
+    <result column="API_STATUS" jdbcType="VARCHAR" property="apiStatus" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="EXPIRE_TIME" jdbcType="TIMESTAMP" property="expireTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    API_NAME, API_DESC, API_VERSION, API_STATUS, CREATE_TIME, EXPIRE_TIME
+  </sql>
+</mapper>

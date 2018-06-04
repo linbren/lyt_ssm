@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsFunctionTmpDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsFunctionTmp">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="FUNC_CODE" jdbcType="VARCHAR" property="funcCode" />
+    <result column="FUNC_NAME" jdbcType="VARCHAR" property="funcName" />
+    <result column="FUNC_URL" jdbcType="VARCHAR" property="funcUrl" />
+    <result column="FUNC_METHOD" jdbcType="VARCHAR" property="funcMethod" />
+    <result column="FUNC_ICON" jdbcType="VARCHAR" property="funcIcon" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="FUNC_TYPE" jdbcType="VARCHAR" property="funcType" />
+    <result column="PERMISSION" jdbcType="VARCHAR" property="permission" />
+    <result column="SORT_CODE" jdbcType="VARCHAR" property="sortCode" />
+    <result column="IS_VALID" jdbcType="VARCHAR" property="isValid" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+</mapper>

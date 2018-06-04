@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsAppDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsApp">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="APP_NAME" jdbcType="VARCHAR" property="appName" />
+    <result column="APP_URL" jdbcType="VARCHAR" property="appUrl" />
+    <result column="APP_ICON" jdbcType="VARCHAR" property="appIcon" />
+    <result column="APP_TYPE" jdbcType="VARCHAR" property="appType" />
+    <result column="APP_VERSION" jdbcType="VARCHAR" property="appVersion" />
+    <result column="SORT_CODE" jdbcType="INTEGER" property="sortCode" />
+    <result column="IS_VALID" jdbcType="VARCHAR" property="isValid" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_NAME, APP_URL, APP_ICON, APP_TYPE, APP_VERSION, SORT_CODE, IS_VALID, REMARK
+  </sql>
+</mapper>

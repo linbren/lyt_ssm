@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsResourceConfigDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsResourceConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="RESOURCE_NAME" jdbcType="VARCHAR" property="resourceName" />
+    <result column="PRIMARY_FIELD" jdbcType="VARCHAR" property="primaryField" />
+    <result column="DISPLAY_FIELD" jdbcType="VARCHAR" property="displayField" />
+    <result column="PARENT_ID_FIELD" jdbcType="VARCHAR" property="parentIdField" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, RESOURCE_NAME, PRIMARY_FIELD, DISPLAY_FIELD, PARENT_ID_FIELD
+  </sql>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsRoleResourceDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsRoleResource">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="ROLE_ID" jdbcType="INTEGER" property="roleId" />
+    <result column="RESOURCE_TYPE" jdbcType="VARCHAR" property="resourceType" />
+    <result column="RESOURCE_ID" jdbcType="VARCHAR" property="resourceId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, ROLE_ID, RESOURCE_TYPE, RESOURCE_ID
+  </sql>
+</mapper>

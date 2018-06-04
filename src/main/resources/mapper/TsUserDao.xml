@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsUserDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+    <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="USER_PASS" jdbcType="VARCHAR" property="userPass" />
+    <result column="USER_PHOTO" jdbcType="VARCHAR" property="userPhoto" />
+    <result column="ID_NUMBER" jdbcType="VARCHAR" property="idNumber" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
+    <result column="TELPHONE" jdbcType="VARCHAR" property="telphone" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="BIRTH_DATE" jdbcType="VARCHAR" property="birthDate" />
+    <result column="SORT_CODE" jdbcType="INTEGER" property="sortCode" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="SECRET_KEY" jdbcType="VARCHAR" property="secretKey" />
+    <result column="ACCESS_TOKEN" jdbcType="VARCHAR" property="accessToken" />
+    <result column="EXPIRE_TIME" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, ORG_ID, USER_CODE, USER_NAME, USER_PASS, USER_PHOTO, ID_NUMBER, SEX, 
+    USER_EMAIL, TELPHONE, ADDRESS, BIRTH_DATE, SORT_CODE, STATUS, CREATE_TIME, SECRET_KEY, 
+    ACCESS_TOKEN, EXPIRE_TIME, REMARK
+  </sql>
+  <!-- and user_pass=#{userPass} -->
+  <select id="getUserByName" parameterType="String" resultMap="BaseResultMap">
+    select * from ts_user where USER_CODE=#{userName} 
+  </select>  
+  <select id="getRoles" parameterType="String" resultType="net.business.system.entity.TsRole">
+    select distinct A.* from TS_ROLE A,TS_USER B,TS_USER_ROLE C
+     where user_code=#{userName} AND A.ID=C.ROLE_ID AND B.ID=C.USER_ID	
+  </select>   
+    <select id="getFunctionsByUserName" parameterType="String" resultType="net.business.system.entity.TsFunction">
+    with func(ID,FUNC_CODE,PARENT_code,FUNC_NAME,FUNC_URL,FUNC_ICON,APP_ID,FUNC_TYPE,IS_VALID,SORT_CODE)
+	as(select ID,FUNC_CODE,PARENT_CODE,FUNC_NAME,FUNC_URL,FUNC_ICON,APP_ID,FUNC_TYPE,IS_VALID,SORT_CODE
+	 from TS_FUNCTION where PARENT_CODE = '' union all 
+	 select A.ID,A.FUNC_CODE,A.PARENT_CODE,A.FUNC_NAME,A.FUNC_URL,A.FUNC_ICON,A.APP_ID,A.FUNC_TYPE,A.IS_VALID,A.SORT_CODE 
+	from TS_FUNCTION A inner JOIN TS_FUNCTION B on(
+	A.PARENT_CODE = B.FUNC_CODE and B.IS_VALID = '1')) 
+	select DISTINCT A.* from func A,TS_ROLE_FUNC B ,TS_ROLE C,TS_USER_ROLE D ,TS_USER E
+	 WHERE A.ID=B.FUNC_ID AND B.ROLE_ID=C.ID AND C.ID=D.ROLE_ID AND D.USER_ID=E.ID
+	 AND A.APP_ID='6000' AND A.FUNC_TYPE='1' AND A.IS_VALID='1'
+	 AND user_code=#{userName} AND C.STATUS = '1' ORDER BY A.SORT_CODE  
+  </select>
+</mapper>

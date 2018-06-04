@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsDicttypeDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsDicttype">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DICT_NAME" jdbcType="VARCHAR" property="dictName" />
+    <result column="IS_VALID" jdbcType="VARCHAR" property="isValid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, DICT_NAME, IS_VALID
+  </sql>
+</mapper>

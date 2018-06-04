@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsSqlConfigDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsSqlConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="SQL_CODE" jdbcType="VARCHAR" property="sqlCode" />
+    <result column="SQL_NAME" jdbcType="VARCHAR" property="sqlName" />
+    <result column="SQL_CONTENT" jdbcType="VARCHAR" property="sqlContent" />
+    <result column="SQL_TYPE" jdbcType="VARCHAR" property="sqlType" />
+    <result column="PURPOSE" jdbcType="VARCHAR" property="purpose" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    SQL_CODE, SQL_NAME, SQL_CONTENT, SQL_TYPE, PURPOSE
+  </sql>
+</mapper>

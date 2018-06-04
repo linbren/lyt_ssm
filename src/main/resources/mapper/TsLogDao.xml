@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsLogDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+    <result column="OPT_NAME" jdbcType="VARCHAR" property="optName" />
+    <result column="OPT_CONTENT" jdbcType="VARCHAR" property="optContent" />
+    <result column="REQUEST_URL" jdbcType="VARCHAR" property="requestUrl" />
+    <result column="REQUEST_IP" jdbcType="VARCHAR" property="requestIp" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, USER_CODE, OPT_NAME, OPT_CONTENT, REQUEST_URL, REQUEST_IP, CREATE_TIME
+  </sql>
+</mapper>

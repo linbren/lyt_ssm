@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsFunctionDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsFunction">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="FUNC_CODE" jdbcType="VARCHAR" property="funcCode" />
+    <result column="FUNC_NAME" jdbcType="VARCHAR" property="funcName" />
+    <result column="FUNC_URL" jdbcType="VARCHAR" property="funcUrl" />
+    <result column="FUNC_METHOD" jdbcType="VARCHAR" property="funcMethod" />
+    <result column="FUNC_ICON" jdbcType="VARCHAR" property="funcIcon" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="FUNC_TYPE" jdbcType="VARCHAR" property="funcType" />
+    <result column="PERMISSION" jdbcType="VARCHAR" property="permission" />
+    <result column="SORT_CODE" jdbcType="INTEGER" property="sortCode" />
+    <result column="IS_VALID" jdbcType="VARCHAR" property="isValid" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, APP_ID, FUNC_CODE, FUNC_NAME, FUNC_URL, FUNC_METHOD, FUNC_ICON, PARENT_CODE, 
+    FUNC_TYPE, PERMISSION, SORT_CODE, IS_VALID, REMARK
+  </sql>
+  <select id="getFunctionByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+             with func(ID,FUNC_CODE,PARENT_CODE,FUNC_NAME,FUNC_URL,FUNC_ICON,APP_ID,FUNC_TYPE,IS_VALID,SORT_CODE)
+	  			as(select ID,FUNC_CODE,PARENT_CODE,FUNC_NAME,FUNC_URL,FUNC_ICON,APP_ID,FUNC_TYPE,IS_VALID,SORT_CODE
+				 from TS_FUNCTION where PARENT_CODE = '' union all 
+				 select A.ID,A.FUNC_CODE,A.PARENT_CODE,A.FUNC_NAME,A.FUNC_URL,A.FUNC_ICON,A.APP_ID,A.FUNC_TYPE,A.IS_VALID,A.SORT_CODE 
+				from TS_FUNCTION A inner JOIN TS_FUNCTION B on(
+				A.PARENT_CODE = B.FUNC_CODE and B.IS_VALID = '1')) 
+				select DISTINCT A.* from func A,TS_ROLE_FUNC B ,TS_ROLE C,TS_USER_ROLE D ,TS_USER E
+				 WHERE A.ID=B.FUNC_ID AND B.ROLE_ID=C.ID AND C.ID=D.ROLE_ID AND D.USER_ID=E.ID
+				 AND A.APP_ID='6000' AND A.FUNC_TYPE='1' AND A.IS_VALID='1'
+				 AND E.ID=#{id} AND C.STATUS = '1' ORDER BY A.SORT_CODE  
+  </select>  
+</mapper>

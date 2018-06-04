@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsOrganExtDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsOrganExt">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="INDUSTRY" jdbcType="VARCHAR" property="industry" />
+    <result column="ORG_SUMMARY" jdbcType="VARCHAR" property="orgSummary" />
+    <result column="ORG_LOGO" jdbcType="VARCHAR" property="orgLogo" />
+    <result column="ORG_MAP" jdbcType="VARCHAR" property="orgMap" />
+    <result column="ORG_IMAGES" jdbcType="VARCHAR" property="orgImages" />
+    <result column="WEB_URL" jdbcType="VARCHAR" property="webUrl" />
+    <result column="ORG_EMAIL" jdbcType="VARCHAR" property="orgEmail" />
+    <result column="ZIP_CODE" jdbcType="VARCHAR" property="zipCode" />
+    <result column="HOT_LINE" jdbcType="VARCHAR" property="hotLine" />
+    <result column="FOUND_DATE" jdbcType="TIMESTAMP" property="foundDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, INDUSTRY, ORG_SUMMARY, ORG_LOGO, ORG_MAP, ORG_IMAGES, WEB_URL, ORG_EMAIL, ZIP_CODE, 
+    HOT_LINE, FOUND_DATE
+  </sql>
+</mapper>

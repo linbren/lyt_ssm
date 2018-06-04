@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 缓存管理器 使用Ehcache实现 -->
+<!--     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml" />
+    </bean>
+ -->
+    <!-- 凭证匹配器 -->
+    <bean id="credentialsMatcher" class="net.platform.shiro.RetryLimitHashedCredentialsMatcher">
+     <!--    <constructor-arg ref="cacheManager" /> -->
+        <property name="hashAlgorithmName" value="md5" /> 
+        
+<!--         <property name="hashIterations" value="2" />
+        <property name="storedCredentialsHexEncoded" value="true" /> -->
+    </bean>
+
+    <!-- Realm实现 -->
+    <bean id="userRealm" class="net.platform.shiro.UserRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher" />
+    </bean>
+
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="userRealm" />
+		<!-- sessionManager -->
+		<property name="sessionManager" ref="sessionManager" />		 
+		<!-- cacheManager -->
+		 <property name="cacheManager" ref="cacheManager" />        
+    </bean>
+
+	<!-- shiro redisManager -->
+	<bean id="redisManager" class="org.crazycake.shiro.RedisManager">
+		<property name="host" value="127.0.0.1"/>
+		<property name="port" value="6379"/>
+		<property name="expire" value="1800"/>
+		<!-- optional properties:
+		<property name="timeout" value="10000"/>
+		<property name="password" value="123456"/>
+		-->
+	</bean>
+	
+	<!-- redisSessionDAO -->
+	<bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
+		<property name="redisManager" ref="redisManager" />
+	</bean>
+	
+	<!-- sessionManager -->
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="sessionDAO" ref="redisSessionDAO" />
+	        <!-- 设置session过期时间为1小时(单位：毫秒)，默认为30分钟 -->
+	        <property name="globalSessionTimeout" value="3600000"></property>
+	        <property name="sessionValidationSchedulerEnabled" value="true"></property>
+	        <property name="sessionIdCookie">
+	            <bean class="org.apache.shiro.web.servlet.SimpleCookie">
+	                <property name="name" value="SHRIOSESSIONID" />
+	            </bean>
+	        </property>		
+	</bean>
+	
+	<!-- cacheManager -->
+	<bean id="cacheManager" class="org.crazycake.shiro.RedisCacheManager">
+		<property name="redisManager" ref="redisManager" />
+	</bean>
+
+    <!-- Shiro的Web过滤器 -->
+ <!--     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
+    <bean id="shiroFilter" class="net.platform.shiro.ShiroPermissionFactory"> 
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="/login" />
+        <property name="successUrl" value="/index"/>
+        <property name="unauthorizedUrl" value="/unauthorized" />
+        <property name="filterChainDefinitions">
+            <value>
+               <!-- 静态资源允许访问 --> 
+               /adminlte/** = anon 
+               /other/** = anon 
+               / = anon
+               <!-- 登录页允许访问 --> 
+               /login = anon 
+               /postLogin = anon
+               /logout = anon
+               /unauthorized= anon
+               <!-- 其他资源需要认证 --> 
+            <!--    /** = authc -->
+               <!-- 其他资源需要权限 --> 
+<!-- 				/user/hi = perms[100010200000]
+				/role/getRole = perms[100010400000]
+				/role/list = perms[100010300000]
+				/user/helloftl = perms[100010100000] -->
+               <!-- /** = perms[*] -->
+            </value>
+        </property>
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+<!--启用shiro注解 -->  
+    <bean  
+        class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"  
+        depends-on="lifecycleBeanPostProcessor">  
+        <property name="proxyTargetClass" value="true" />  
+    </bean>  
+    <bean  
+        class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+        <property name="securityManager" ref="securityManager" />  
+    </bean>     
+</beans>

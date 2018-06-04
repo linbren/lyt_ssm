@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!-- 激活组件扫描功能,扫描aop的相关组件组件 -->
+    <context:component-scan base-package="net.business.*.aop"/>
+    <!-- 启动对@AspectJ注解的支持 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+    <!--简化配置:
+    	1、自动注册DefaultAnnotationHandlerMapping,AnnotationMethodHandlerAdapter
+    	2、提供一系列:数据绑定,数字和日期的format,@NumberFormat,@DataTimeFormat,xml,json默认读写支持
+    -->
+    <mvc:annotation-driven/>
+
+    <!--静态资源默认servlet配置
+    	1、加入对静态资源的处理:js,css,gif,png
+    	2、允许使用"/"做整体映射
+    -->
+    <mvc:default-servlet-handler/>
+     <!-- 配置freeMarker的模板路径 -->  
+     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
+        <property name="templateLoaderPath" value="/WEB-INF/templates/" />  
+        <property name="defaultEncoding" value="UTF-8" />  
+        <property name="freemarkerSettings">
+            <props>
+            <!-- 用来指定更新模版文件的间隔时间，0 表示每次都重新加载 -->
+                <prop key="template_update_delay">0</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="number_format">#.##</prop>
+            </props>
+        </property>        
+     </bean>  
+     <!-- freemarker视图解析器 -->  
+     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="cache" value="false" />   
+        <property name="suffix" value=".ftl" />  
+        <property name="contentType" value="text/html;charset=UTF-8" />  
+        <!-- 此变量值为pageContext.request, 页面使用方法：request.contextPath -->  
+        <property name="requestContextAttribute" value="request" /> 
+        <property name="order" value="0"/> 
+     </bean> 
+    <!--配置JSP　显示ViewResolver-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="order" value="1"/>
+    </bean>
+
+    <!--扫描web相关的controller-->
+    <context:component-scan base-package="net.business.*.web"/>
+
+	<!--全局异常捕捉 -->
+	<bean class="net.platform.exception.GlobalExceptionResolver" />
+   <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
+    <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
+    <!-- 引用Swagger 默认配置 -->
+    <bean class="net.platform.swagger.SwaggerConfig" id="swaggerConfig"/>
+</beans>

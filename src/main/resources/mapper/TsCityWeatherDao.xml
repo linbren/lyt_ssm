@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.business.system.dao.TsCityWeatherDao">
+  <resultMap id="BaseResultMap" type="net.business.system.entity.TsCityWeather">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="py" jdbcType="VARCHAR" property="py" />
+    <result column="fpy" jdbcType="VARCHAR" property="fpy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, city, py, fpy
+  </sql>
+</mapper>
